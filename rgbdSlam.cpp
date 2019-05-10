@@ -35,6 +35,7 @@ int main( int argc, char** argv )
 {
     //Read data
     ParameterReader pd;
+    int window = atoi( pd.getData( "window" ).c_str() );
     int scaleOfGoodMatch = atoi( pd.getData( "scaleOfGoodMatch" ).c_str() );
     int display = atoi( pd.getData( "display" ).c_str() );
     int imgDisplay = atoi( pd.getData( "imageDisplay" ).c_str() );
@@ -145,7 +146,7 @@ int main( int argc, char** argv )
           { goodMatches.push_back( matches[i]); }
         }
 
-        cout << "Image " << i << " good Matches " << goodMatches.size() << endl;
+        
         if (goodMatches.size() < 5) continue; 
         // 3D poitns
         std::vector<cv::Point3d> src; 
@@ -187,8 +188,10 @@ int main( int argc, char** argv )
                 }
             }
         }
+        cout << "Image [" << i << " ] and Image [ " << currIndex 
+             << " ] InLinear " << count << endl;
         cout << "Current threshold " << threshold <<endl;
-        //if (threshold > 50.0) continue; 
+        //if (threshold > 300.0) continue; 
         std::vector<cv::Point3d> srcSVD; 
         std::vector<cv::Point3d> dstSVD; 
 
@@ -200,6 +203,29 @@ int main( int argc, char** argv )
                 dstSVD.push_back(dst[i]); 
             }
         }
+        int writeImg = atoi( pd.getData( "writeImg" ).c_str() );
+
+        if (writeImg)
+        {
+            cv::Mat imgMatches;
+            std::vector<cv::DMatch> goodMatches2;
+            for (int i = 0; i < src.size(); ++i)
+            {
+                //std::cout << inliers.at<bool>(0,i) << std::endl; 
+                if(inliers.at<bool>(0,i) == true)
+                {
+                    goodMatches2.push_back(goodMatches[i]); 
+                }
+            }
+            cv::drawMatches( f1.rgb, f1.kp, f2.rgb, f2.kp, goodMatches2, 
+                imgMatches,cv::Scalar_<double>::all(-1), 
+                cv::Scalar_<double>::all(-1), std::vector<char>(), 
+                cv::DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS);
+            cv::imshow( "good matches", imgMatches );
+            cv::imwrite( "good_matches.png", imgMatches );
+            cv::waitKey(0); 
+        }
+
         std::vector<double> t(3); 
         std::vector<double> Rot(3); 
         ResultOfSVD Rt = poseEstimation3D3DReturn(srcSVD, dstSVD, Rot, t);
@@ -235,7 +261,6 @@ int main( int argc, char** argv )
         edge->setInformation( information );
         edge->setMeasurement( T );
         globalOptimizer.addEdge(edge);
-
 
         currIndex = i; 
 

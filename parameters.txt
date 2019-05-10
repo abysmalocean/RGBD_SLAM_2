@@ -1,10 +1,10 @@
 display=1
 imageDisplay=0
-writeImg=1
+writeImg=0
 width=176 
 height=144
 DataFolder=data
-
+window=5
 testImage=data/d1_0001.dat
 frame1=1
 frame2=5
