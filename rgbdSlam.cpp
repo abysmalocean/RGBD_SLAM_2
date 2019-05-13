@@ -117,6 +117,8 @@ int main( int argc, char** argv )
     Eigen::Isometry3d T = Eigen::Isometry3d::Identity();
     // flann mather
     cv::Ptr<cv::DescriptorMatcher> matcher = cv::makePtr<cv::FlannBasedMatcher>();
+    int writeImg = atoi( pd.getData( "writeImg" ).c_str() );
+
 
     for (int i = 1; i < source.size(); ++i)
     {
@@ -203,8 +205,7 @@ int main( int argc, char** argv )
                 dstSVD.push_back(dst[i]); 
             }
         }
-        int writeImg = atoi( pd.getData( "writeImg" ).c_str() );
-
+        
         if (writeImg)
         {
             cv::Mat imgMatches;
@@ -240,7 +241,7 @@ int main( int argc, char** argv )
         T(1,2) = Rt.R_(1,2);
         T(2,0) = Rt.R_(2,0);
         T(2,1) = Rt.R_(2,1);
-        T(2,2) = Rt.R_(2,2);
+        T(2,2) = Rt.R_(2,2); 
         
         // add vertex(Nodes ) 
         g2o::VertexSE3 *v = new g2o::VertexSE3();
@@ -256,8 +257,8 @@ int main( int argc, char** argv )
         // Inforamtion Matrix
         Eigen::Matrix<double, 6, 6> information = Eigen::Matrix< double, 6,6 >::Identity();
 
-        information(0,0) = information(1,1) = information(2,2) = 20;
-        information(3,3) = information(4,4) = information(5,5) = 20;
+        information(0,0) = information(1,1) = information(2,2) = 200;
+        information(3,3) = information(4,4) = information(5,5) = 200;
         edge->setInformation( information );
         edge->setMeasurement( T );
         globalOptimizer.addEdge(edge);
@@ -266,10 +267,124 @@ int main( int argc, char** argv )
 
     }
 
+    
+    for (int i = window; i < source.size(); ++i)
+    {
+        for(int j = i - window; j < i - 1; ++j)
+        {
+            std::vector<cv::DMatch> matches;
+            FRAME f1 = source[i]; 
+            FRAME f2 = source[j]; 
+
+            matcher->match( f1.desp, f2.desp , matches );
+            double max_dist = 0; double min_dist = 100;
+
+            for( int i = 0; i < f1.desp.rows; i++ )
+            { double dist = matches[i].distance;
+              if( dist < min_dist ) min_dist = dist;
+              if( dist > max_dist ) max_dist = dist;
+            }
+            std::vector< cv::DMatch > goodMatches;
+            for( int i = 0; i < f1.desp.rows; i++ )
+            { if( matches[i].distance <= std::max(scaleOfGoodMatch*min_dist, 0.02) )
+              { goodMatches.push_back( matches[i]); }
+            }
+            if (goodMatches.size() < 5) continue; 
+
+            // 3D poitns
+            std::vector<cv::Point3d> src; 
+            std::vector<cv::Point3d> dst;
+            for (size_t i = 0; i<goodMatches.size(); ++i)
+            {
+                cv::Point2d p1 = f1.kp[goodMatches[i].queryIdx].pt;
+                cv::Point2d p2 = f2.kp[goodMatches[i].trainIdx].pt;
+                cv::Point3d point1; 
+                cv::Point3d point2;
+                point1.x = f1.depth_x.at<double>(int(p1.y), int(p1.x)); 
+                point1.y = f1.depth_y.at<double>(int(p1.y), int(p1.x)); 
+                point1.z = f1.depth_z.at<double>(int(p1.y), int(p1.x));
+                point2.x = f2.depth_x.at<double>(int(p2.y), int(p2.x)); 
+                point2.y = f2.depth_y.at<double>(int(p2.y), int(p2.x)); 
+                point2.z = f2.depth_z.at<double>(int(p2.y), int(p2.x));
+                src.push_back(point1); 
+                dst.push_back(point2);
+            }
+
+            int half = src.size() * 0.6;
+            double threshold = 5.0; 
+            cv::Mat rvec, translationVec, inliers, ratationVector;
+            cv::Mat affine = cv::Mat::zeros(3,4,CV_64F);
+    
+            count = 0; 
+            while (count < half && threshold < 41.0)
+            {
+                threshold += 1.0;
+                cv::estimateAffine3D(src, dst, affine,inliers, threshold ,0.98);
+                count = 0; 
+                for (int i = 0; i < src.size(); ++i)
+                {
+                    if(inliers.at<bool>(0,i) == true)
+                    {
+                        ++count; 
+                    }
+                }
+            }
+            cout << "Image [" << i << " ] and Image [ " << j 
+                 << " ] InLinear " << count << endl;
+            cout << "Current threshold " << threshold <<endl;
+
+            if (threshold > 40.0) continue; 
+            std::vector<cv::Point3d> srcSVD; 
+            std::vector<cv::Point3d> dstSVD; 
+    
+            for (int i = 0; i < src.size(); ++i)
+            {
+                if(inliers.at<bool>(0,i) == true)
+                {
+                    srcSVD.push_back(src[i]); 
+                    dstSVD.push_back(dst[i]); 
+                }
+            }
+            std::vector<double> t(3); 
+            std::vector<double> Rot(3); 
+            ResultOfSVD Rt = poseEstimation3D3DReturn(srcSVD, dstSVD, Rot, t);
+            T(0,3) = Rt.t_(0,0); 
+            T(1,3) = Rt.t_(1,0); 
+            T(2,3) = Rt.t_(2,0); 
+            T(0,0) = Rt.R_(0,0);
+            T(0,1) = Rt.R_(0,1);
+            T(0,2) = Rt.R_(0,2);
+            T(1,0) = Rt.R_(1,0);
+            T(1,1) = Rt.R_(1,1);
+            T(1,2) = Rt.R_(1,2);
+            T(2,0) = Rt.R_(2,0);
+            T(2,1) = Rt.R_(2,1);
+            T(2,2) = Rt.R_(2,2); 
+            // add edge
+            g2o::EdgeSE3* edge = new g2o::EdgeSE3();
+            edge->vertices() [0] = globalOptimizer.vertex( i );
+            edge->vertices() [1] = globalOptimizer.vertex( j );
+
+            // Inforamtion Matrix
+            Eigen::Matrix<double, 6, 6> information = Eigen::Matrix< double, 6,6 >::Identity();
+
+            information(0,0) = information(1,1) = information(2,2) = 200;
+            information(3,3) = information(4,4) = information(5,5) = 200;
+
+            edge->setInformation( information );
+            edge->setMeasurement( T );
+            globalOptimizer.addEdge(edge);
+
+
+
+        }
+    }
+    
+
     for (int index = 0; index < window; ++index)
     {
         // find matches
-        int frame1 = source.size()-1-window-index;
+        int frame1 = source.size()-1-window+index;
         int frame2 = index; 
         std::vector<cv::DMatch> matches;
         FRAME f1 = source[frame1]; 
@@ -343,28 +458,7 @@ int main( int argc, char** argv )
                 dstSVD.push_back(dst[i]); 
             }
         }
-        int writeImg = atoi( pd.getData( "writeImg" ).c_str() );
-
-        if (writeImg)
-        {
-            cv::Mat imgMatches;
-            std::vector<cv::DMatch> goodMatches2;
-            for (int i = 0; i < src.size(); ++i)
-            {
-                //std::cout << inliers.at<bool>(0,i) << std::endl; 
-                if(inliers.at<bool>(0,i) == true)
-                {
-                    goodMatches2.push_back(goodMatches[i]); 
-                }
-            }
-            cv::drawMatches( f1.rgb, f1.kp, f2.rgb, f2.kp, goodMatches2, 
-                imgMatches,cv::Scalar_<double>::all(-1), 
-                cv::Scalar_<double>::all(-1), std::vector<char>(), 
-                cv::DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS);
-            cv::imshow( "good matches", imgMatches );
-            cv::imwrite( "good_matches.png", imgMatches );
-            cv::waitKey(0); 
-        }
+        
 
         std::vector<double> t(3); 
         std::vector<double> Rot(3); 
@@ -390,18 +484,19 @@ int main( int argc, char** argv )
         // Inforamtion Matrix
         Eigen::Matrix<double, 6, 6> information = Eigen::Matrix< double, 6,6 >::Identity();
 
-        information(0,0) = information(1,1) = information(2,2) = 20;
-        information(3,3) = information(4,4) = information(5,5) = 20;
+        information(0,0) = information(1,1) = information(2,2) = 400;
+        information(3,3) = information(4,4) = information(5,5) = 400;
         edge->setInformation( information );
         edge->setMeasurement( T );
         globalOptimizer.addEdge(edge);
 
     }
+    
 
     cout<<"optimizing pose graph, vertices: "<<globalOptimizer.vertices().size()<<endl;
     globalOptimizer.save("./result_before.g2o");
     globalOptimizer.initializeOptimization();
-    globalOptimizer.optimize(100000 );
+    globalOptimizer.optimize(100 );
     globalOptimizer.save( "./result_after.g2o" );
     cout<<"Optimization done."<<endl;
 
