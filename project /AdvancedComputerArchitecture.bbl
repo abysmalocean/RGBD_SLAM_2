@@ -1,0 +1,156 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{9}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{}, \showDOI{}, and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showDOI}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showDOI #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showDOI      \undefined \def \showDOI       #1{#1}\fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[\protect\citeauthoryear{Gonzalez, Low, Gu, Bickson, and
+  Guestrin}{Gonzalez et~al\mbox{.}}{2012}]%
+        {gonzalez2012powergraph}
+\bibfield{author}{\bibinfo{person}{Joseph~E Gonzalez}, \bibinfo{person}{Yucheng
+  Low}, \bibinfo{person}{Haijie Gu}, \bibinfo{person}{Danny Bickson}, {and}
+  \bibinfo{person}{Carlos Guestrin}.} \bibinfo{year}{2012}\natexlab{}.
+\newblock \showarticletitle{PowerGraph: Distributed Graph-Parallel Computation
+  on Natural Graphs.}. In \bibinfo{booktitle}{{\em OSDI}},
+  Vol.~\bibinfo{volume}{12}. \bibinfo{pages}{2}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Han, Lee, Park, Lee, Kim, Kim, and Yu}{Han
+  et~al\mbox{.}}{2013}]%
+        {han2013turbograph}
+\bibfield{author}{\bibinfo{person}{Wook-Shin Han}, \bibinfo{person}{Sangyeon
+  Lee}, \bibinfo{person}{Kyungyeol Park}, \bibinfo{person}{Jeong-Hoon Lee},
+  \bibinfo{person}{Min-Soo Kim}, \bibinfo{person}{Jinha Kim}, {and}
+  \bibinfo{person}{Hwanjo Yu}.} \bibinfo{year}{2013}\natexlab{}.
+\newblock \showarticletitle{TurboGraph: a fast parallel graph engine handling
+  billion-scale graphs in a single PC}. In \bibinfo{booktitle}{{\em Proceedings
+  of the 19th ACM SIGKDD international conference on Knowledge discovery and
+  data mining}}. ACM, \bibinfo{pages}{77--85}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Kyrola, Blelloch, and Guestrin}{Kyrola
+  et~al\mbox{.}}{2012}]%
+        {kyrola2012graphchi}
+\bibfield{author}{\bibinfo{person}{Aapo Kyrola}, \bibinfo{person}{Guy~E
+  Blelloch}, {and} \bibinfo{person}{Carlos Guestrin}.}
+  \bibinfo{year}{2012}\natexlab{}.
+\newblock \showarticletitle{Graphchi: Large-scale graph computation on just a
+  pc}. USENIX.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Lee, Kim, Yoo, Choi, Hofstee, Nam, Nutter, and
+  Jamsek}{Lee et~al\mbox{.}}{2017}]%
+        {lee2017extrav}
+\bibfield{author}{\bibinfo{person}{Jinho Lee}, \bibinfo{person}{Heesu Kim},
+  \bibinfo{person}{Sungjoo Yoo}, \bibinfo{person}{Kiyoung Choi},
+  \bibinfo{person}{H~Peter Hofstee}, \bibinfo{person}{Gi-Joon Nam},
+  \bibinfo{person}{Mark~R Nutter}, {and} \bibinfo{person}{Damir Jamsek}.}
+  \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{ExtraV: boosting graph processing near storage with
+  a coherent accelerator}.
+\newblock \bibinfo{journal}{{\em Proceedings of the VLDB Endowment\/}}
+  \bibinfo{volume}{10}, \bibinfo{number}{12} (\bibinfo{year}{2017}),
+  \bibinfo{pages}{1706--1717}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Malicevic, Lepers, and Zwaenepoel}{Malicevic
+  et~al\mbox{.}}{2017}]%
+        {malicevic2017everything}
+\bibfield{author}{\bibinfo{person}{Jasmina Malicevic},
+  \bibinfo{person}{Baptiste Joseph~Eustache Lepers}, {and}
+  \bibinfo{person}{Willy Zwaenepoel}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Everything You Always Wanted to Know about
+  Multicore Graph Processing but Were Afraid to Ask}. In
+  \bibinfo{booktitle}{{\em 2017 USENIX Annual Technical Conference (USENIX ATC
+  17)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Nai, Hadidi, Sim, Kim, Kumar, and Kim}{Nai
+  et~al\mbox{.}}{2017}]%
+        {nai2017graphpim}
+\bibfield{author}{\bibinfo{person}{Lifeng Nai}, \bibinfo{person}{Ramyad
+  Hadidi}, \bibinfo{person}{Jaewoong Sim}, \bibinfo{person}{Hyojong Kim},
+  \bibinfo{person}{Pranith Kumar}, {and} \bibinfo{person}{Hyesoon Kim}.}
+  \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{GraphPIM: Enabling Instruction-Level PIM Offloading
+  in Graph Computing Frameworks}. In \bibinfo{booktitle}{{\em High Performance
+  Computer Architecture (HPCA), 2017 IEEE International Symposium on}}. IEEE,
+  \bibinfo{pages}{457--468}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Nai, Xia, Tanase, Kim, and Lin}{Nai
+  et~al\mbox{.}}{2015}]%
+        {nai2015graphbig}
+\bibfield{author}{\bibinfo{person}{Lifeng Nai}, \bibinfo{person}{Yinglong Xia},
+  \bibinfo{person}{Ilie~G Tanase}, \bibinfo{person}{Hyesoon Kim}, {and}
+  \bibinfo{person}{Ching-Yung Lin}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{GraphBIG: understanding graph computing in the
+  context of industrial solutions}. In \bibinfo{booktitle}{{\em High
+  Performance Computing, Networking, Storage and Analysis, 2015
+  SC-International Conference for}}. IEEE, \bibinfo{pages}{1--12}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Roy, Mihailovic, and Zwaenepoel}{Roy
+  et~al\mbox{.}}{2013}]%
+        {roy2013x}
+\bibfield{author}{\bibinfo{person}{Amitabha Roy}, \bibinfo{person}{Ivo
+  Mihailovic}, {and} \bibinfo{person}{Willy Zwaenepoel}.}
+  \bibinfo{year}{2013}\natexlab{}.
+\newblock \showarticletitle{X-stream: Edge-centric graph processing using
+  streaming partitions}. In \bibinfo{booktitle}{{\em Proceedings of the
+  Twenty-Fourth ACM Symposium on Operating Systems Principles}}. ACM,
+  \bibinfo{pages}{472--488}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Shun and Blelloch}{Shun and Blelloch}{2013}]%
+        {shun2013ligra}
+\bibfield{author}{\bibinfo{person}{Julian Shun} {and} \bibinfo{person}{Guy~E
+  Blelloch}.} \bibinfo{year}{2013}\natexlab{}.
+\newblock \showarticletitle{Ligra: a lightweight graph processing framework for
+  shared memory}. In \bibinfo{booktitle}{{\em ACM Sigplan Notices}},
+  Vol.~\bibinfo{volume}{48}. ACM, \bibinfo{pages}{135--146}.
+\newblock
+
+
+\end{thebibliography}

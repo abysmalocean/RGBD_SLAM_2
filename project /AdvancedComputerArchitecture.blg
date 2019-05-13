@@ -1,0 +1,75 @@
+This is BibTeX, Version 0.99d (TeX Live 2017/Debian)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: AdvancedComputerArchitecture.aux
+The style file: ACM-Reference-Format.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Database file #1: bibliography_ACA.bib
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=20001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Warning--can't use both volume and number fields in gonzalez2012powergraph
+Warning--empty publisher in gonzalez2012powergraph
+Warning--empty address in gonzalez2012powergraph
+Warning--empty publisher in han2013turbograph
+Warning--empty address in han2013turbograph
+Warning--empty booktitle in kyrola2012graphchi
+Warning--empty publisher in kyrola2012graphchi
+Warning--empty address in kyrola2012graphchi
+Warning--page numbers missing in both pages and numpages fields in kyrola2012graphchi
+Warning--empty publisher in malicevic2017everything
+Warning--empty address in malicevic2017everything
+Warning--page numbers missing in both pages and numpages fields in malicevic2017everything
+Warning--empty publisher in nai2017graphpim
+Warning--empty address in nai2017graphpim
+Warning--empty publisher in nai2015graphbig
+Warning--empty address in nai2015graphbig
+Warning--empty publisher in roy2013x
+Warning--empty address in roy2013x
+Warning--can't use both volume and number fields in shun2013ligra
+Warning--empty publisher in shun2013ligra
+Warning--empty address in shun2013ligra
+You've used 9 entries,
+            5795 wiz_defined-function locations,
+            1365 strings with 17496 characters,
+and the built_in function-call counts, 11832 in all, are:
+= -- 1221
+> -- 542
+< -- 0
++ -- 181
+- -- 176
+* -- 924
+:= -- 1254
+add.period$ -- 44
+call.type$ -- 9
+change.case$ -- 78
+chr.to.int$ -- 9
+cite$ -- 30
+duplicate$ -- 1059
+empty$ -- 735
+format.name$ -- 212
+if$ -- 2737
+int.to.chr$ -- 2
+int.to.str$ -- 1
+missing$ -- 44
+newline$ -- 104
+num.names$ -- 72
+pop$ -- 467
+preamble$ -- 1
+purify$ -- 159
+quote$ -- 0
+skip$ -- 367
+stack$ -- 0
+substring$ -- 787
+swap$ -- 92
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 256
+warning$ -- 21
+while$ -- 59
+width$ -- 0
+write$ -- 189
+(There were 21 warnings)

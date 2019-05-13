@@ -286,7 +286,7 @@ int main( int argc, char** argv )
             }
             std::vector< cv::DMatch > goodMatches;
             for( int i = 0; i < f1.desp.rows; i++ )
-            { if( matches[i].distance <= std::max(scaleOfGoodMatch*min_dist, 0.02) )
+            { if( matches[i].distance <= std::max(2.0*scaleOfGoodMatch*min_dist, 0.02) )
               { goodMatches.push_back( matches[i]); }
             }
             if (goodMatches.size() < 5) continue; 
@@ -316,9 +316,9 @@ int main( int argc, char** argv )
             cv::Mat affine = cv::Mat::zeros(3,4,CV_64F);
     
             count = 0; 
-            while (count < half && threshold < 41.0)
+            while (count < half && threshold < 100.0)
             {
-                threshold += 1.0;
+                threshold += 2.0;
                 cv::estimateAffine3D(src, dst, affine,inliers, threshold ,0.98);
                 count = 0; 
                 for (int i = 0; i < src.size(); ++i)
@@ -333,7 +333,8 @@ int main( int argc, char** argv )
                  << " ] InLinear " << count << endl;
             cout << "Current threshold " << threshold <<endl;
 
-            if (threshold > 40.0) continue; 
+            //if (threshold > 100.0) continue; 
+            if (count < src.size() * 0.4) continue; 
             std::vector<cv::Point3d> srcSVD; 
             std::vector<cv::Point3d> dstSVD; 
     
@@ -380,7 +381,7 @@ int main( int argc, char** argv )
         }
     }
     
-
+    /*
     for (int index = 0; index < window; ++index)
     {
         // find matches
@@ -491,12 +492,13 @@ int main( int argc, char** argv )
         globalOptimizer.addEdge(edge);
 
     }
+    */
     
 
     cout<<"optimizing pose graph, vertices: "<<globalOptimizer.vertices().size()<<endl;
     globalOptimizer.save("./result_before.g2o");
     globalOptimizer.initializeOptimization();
-    globalOptimizer.optimize(100 );
+    globalOptimizer.optimize(1000 );
     globalOptimizer.save( "./result_after.g2o" );
     cout<<"Optimization done."<<endl;
 

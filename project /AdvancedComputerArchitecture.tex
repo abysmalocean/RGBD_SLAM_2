@@ -1,0 +1,76 @@
+\documentclass[acmlarge]{acmart}
+
+\usepackage{booktabs} % For formal tables
+
+
+\usepackage[ruled]{algorithm2e} % For algorithms
+\renewcommand{\algorithmcfname}{ALGORITHM}
+\SetAlFnt{\small}
+\SetAlCapFnt{\small}
+\SetAlCapNameFnt{\small}
+\SetAlCapHSkip{0pt}
+\IncMargin{-\parindent}
+
+% Metadata Information
+
+
+%\acmBadgeR[http://ctuning.org/ae/ppopp2016.html]{ae-logo}
+%\acmBadgeL[http://ctuning.org/ae/ppopp2016.html]{ae-logo}
+
+
+% Copyright
+%\setcopyright{acmcopyright}
+%\setcopyright{acmlicensed}
+%\setcopyright{rightsretained}
+%\setcopyright{usgov}
+%\setcopyright{usgovmixed}
+%\setcopyright{cagov}
+%\setcopyright{cagovmixed}
+
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\maketitle}{\@copyrightspace}{}{}{}
+\makeatother
+
+\settopmatter{printacmref=false}
+
+\makeatletter
+\def\@copyrightspace{\relax}
+\def\runningfoot{\def\@runningfoot{}}
+\def\firstfoot{\def\@firstfoot{}}
+\makeatother
+
+% Paper history
+
+
+% Document starts
+\begin{document}
+% Title portion
+\title{Visual based Graph SLAM} 
+\titlenote{We can add a note to the title}
+
+
+
+
+
+\begin{abstract}
+Current systems for graph computation require a distributed computing cluster or a supercomputer to handle very large real-world problems, such as ranking web pages and social network analytics. Designing such a scalable system has become one of the most difficult problems facing system researchers. Most problems can not be decomposed into small parts and processed in parallel.  As a result, distributed computing frameworks such as Hadoop are inefficient for performing computations on very large graphs. They also require network communications, which entails a high energy cost.
+
+In recent years, researchers are focusing on single-machine, cluster-based, in-memory and out-of-core systems. To tackle the I/O challenge in graph computing, the strategy of in-memory processing is to load the whole graph data and metadata into DRAM to shorten the latency of random accesses. However, this approach is costly and difficult to scale, because graph sizes have increased faster than memory sizes. The out-of-core method has been proposed to leverage secondary storage such as SSDs and HDD. However, this approach still involves I/O between the system and disks, which is complicated to manage and negatively impacts performance.
+
+This report will focus on some of the challenges for graph computing. The content will be organized as flowing, section 1 will introduce the GrachAcc near data processing project.Section 2 is the per-processing for graph computing. Section 3 will talk about the highly skewed workload distribution for graph computing. Section 4 presents the IO request pattern for graph computing. 
+
+\end{abstract}
+
+
+
+\maketitle
+
+% The default list of authors is too long for headers.
+%\renewcommand{\shortauthors}{G. Zhou et al.}
+
+\input{Body_of_AdvancedComputerArchitecture}
+
+
+
+\end{document}
